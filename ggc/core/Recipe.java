@@ -2,8 +2,9 @@ package ggc.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
-class Recipe {
+class Recipe implements Serializable {
 
     private double _alfa;
     List <Component> _components = new ArrayList<>();
