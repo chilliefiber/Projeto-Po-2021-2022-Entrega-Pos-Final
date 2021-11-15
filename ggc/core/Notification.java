@@ -1,6 +1,6 @@
 package ggc.core;
-
-class Notification {
+import java.io.Serializable;
+class Notification implements Serializable {
 	private String _description;
 	private double _price;
 	private String _productId;
