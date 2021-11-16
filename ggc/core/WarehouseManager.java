@@ -85,7 +85,9 @@ public class WarehouseManager {
 
  
   public Partner getPartner(String id) throws UnknownPartnerException{
-    return _warehouse.getPartner(id);
+	  Partner partner = _warehouse.getPartner(id);
+	  partner.setShowNotifications(true);
+    return partner;
   }
 
   // sem fuga

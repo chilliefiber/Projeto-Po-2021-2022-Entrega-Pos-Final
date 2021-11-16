@@ -18,6 +18,7 @@ public class Partner implements Serializable, ProductObserver {
     private List<Sale> _sales;
     private DeliveryMode _deliveryMode;
     private List<Notification> _notifications;
+    private boolean _showNotifications;
     
     public Partner(String id, String name, String address) { 
         _id = id;
@@ -39,11 +40,15 @@ public class Partner implements Serializable, ProductObserver {
     	String s =  _id +"|"+ _name + "|" + _address + "|" + _status.toString() + 
         		"|" + (int) Math.round(_points) + "|" + (int) Math.round(this.getPurchasesValue()) +
         		"|" + (int) Math.round(this.getSalesValue()) + "|" + (int) Math.round(this.getReceivedValue());
-    	if (_notifications.size() != 0)
-    		s += "\n";
-    	for (Notification notification: _notifications)
-    		s += notification + "\n";
-    	_notifications.clear();
+    	if (_showNotifications) {
+    		if (_notifications.size() != 0)
+    			s += "\n";
+    		for (Notification notification: _notifications)
+    			s += notification + "\n";
+    	
+    		_notifications.clear();
+    		_showNotifications = false;
+    	}
     	return s;
     }
     
@@ -139,5 +144,9 @@ public class Partner implements Serializable, ProductObserver {
 	
 	void paySale(Sale sale) {
 		_status.calculatePointsAndSwitchState(sale, this);
+	}
+	
+	void setShowNotifications(boolean showNotifications) {
+		_showNotifications = showNotifications;
 	}
 }
