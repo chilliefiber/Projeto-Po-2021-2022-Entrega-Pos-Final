@@ -44,7 +44,7 @@ public class Selection implements PartnerStatus, Serializable {
 		// caso o prof responda no mail que não passa a Elite naquele caso
 		// e só passa quando paga a tempo devemos passar esta condição
 		// para dentro da primeira do método
-		if (partner.getPoints() > 250000)
+		if (partner.getPoints() > 25000)
 			partner.setStatus(new Elite());
 	}
 

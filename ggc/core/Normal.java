@@ -34,7 +34,7 @@ class Normal implements PartnerStatus, Serializable {
 		if (period == Period.P1 || period == Period.P2) {
 			// é imperativo garantir que já pagámos antes de chegar aqui
 			partner.addPoints(10 * sale.getAmountPaid());
-			if (partner.getPoints() > 250000)
+			if (partner.getPoints() > 25000)
 				partner.setStatus(new Elite());
 			else if (partner.getPoints() > 2000)
 				partner.setStatus(new Selection());
