@@ -50,6 +50,7 @@ class SaleByCredit extends Sale {
 		return this.getBaseValue() + this.getPartner().calculateDiscountOrPenalty(this, currentDate);
 	}
 	
+	@Override
 	boolean hasBeenPaid() {
 		return this.getAmountPaid() != 0;
 	}

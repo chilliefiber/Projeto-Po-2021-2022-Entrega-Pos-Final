@@ -36,4 +36,8 @@ public abstract class Sale extends Transaction {
 	int getNumberOfDaysOverdue(Date currentDate) {
 		return 0;
 	}
+	
+	boolean hasBeenPaid() {
+		return true;
+	}
 }

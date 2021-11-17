@@ -172,9 +172,8 @@ public class Warehouse implements Serializable {
     	// não há fuga de privacidade
         List<Sale> res = new ArrayList<>();
         for(Sale sale: partner.getSales()) {
-            SaleByCredit s = (SaleByCredit) sale;
-            if (s.hasBeenPaid()){
-                res.add(s);
+            if (sale.hasBeenPaid()){
+                res.add(sale);
             }
         }
     	return res;
