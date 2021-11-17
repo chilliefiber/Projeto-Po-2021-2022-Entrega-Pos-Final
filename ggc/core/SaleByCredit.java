@@ -3,10 +3,12 @@ package ggc.core;
 class SaleByCredit extends Sale {
 	
 	private Date _deadline;
+	private Date _currentDate;
 	
-	SaleByCredit(int quantity, Product product, Partner p, int id, Date deadline) {
+	SaleByCredit(int quantity, Product product, Partner p, int id, Date deadline, Date currentDate) {
 		super(null, quantity, product, p, id);
 		_deadline = deadline;
+		_currentDate = currentDate; // solução artificial para mudar menos linhas de codigo, como pedido nos requisitos desta entrega. Deveria ter feito 1 metodo estatico now na classe Date, mas isso implicava mudar agora a serialização
 	}
 	
 	// parecem estranhos a maneira como foram overriden, 
@@ -58,7 +60,7 @@ class SaleByCredit extends Sale {
 	private double getPaymentValue() {
 		if (this.hasBeenPaid())
 			return  this.getReceivedValue();
-		return this.getExtantDebt(_deadline);
+		return this.getExtantDebt(_currentDate);
 	}
 	
 	private String getLimitDateString() {

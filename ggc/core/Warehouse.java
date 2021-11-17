@@ -185,7 +185,7 @@ public class Warehouse implements Serializable {
   		if (!product.checkQuantity(quantity))
   			throw new InsufficientUnitsException(product.getCurrentStock());
     	Date deadlineDate = new Date(deadline);
-    	SaleByCredit sale = new SaleByCredit(quantity, product, partner, _transactionId++, deadlineDate);
+    	SaleByCredit sale = new SaleByCredit(quantity, product, partner, _transactionId++, deadlineDate, _date);
     	_transactions.put(sale.getId(), sale);
     	partner.addSale(sale);
     }
