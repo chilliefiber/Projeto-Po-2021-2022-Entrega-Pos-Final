@@ -11,16 +11,16 @@ class AggregateProduct extends Product{
     Recipe _recipe;
 
     AggregateProduct(String id){
-        super(id,5);
+        super(id,3);
     }
 
     AggregateProduct(String id, Recipe recipe) {
-        super(id, 5);
+        super(id, 3);
         _recipe = recipe;
     }
     
     public AggregateProduct(String productId, double alpha, List<Product> componentProducts, List<Integer> componentAmounts) {
-    	super(productId, 5);
+    	super(productId, 3);
     	_recipe = new Recipe(alpha);
     	for (int i = 0; i < componentProducts.size(); i++)
     		_recipe.addComponent(new Component(componentProducts.get(i), componentAmounts.get(i)));
