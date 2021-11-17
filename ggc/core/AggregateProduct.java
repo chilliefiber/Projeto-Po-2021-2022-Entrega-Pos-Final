@@ -19,7 +19,16 @@ class AggregateProduct extends Product{
         _recipe = recipe;
     }
     
-    @Override
+    public AggregateProduct(String productId, double alpha, List<Product> componentProducts, List<Integer> componentAmounts) {
+    	super(productId, 5);
+    	_recipe = new Recipe(alpha);
+    	for (int i = 0; i < componentProducts.size(); i++)
+    		_recipe.addComponent(new Component(componentProducts.get(i), componentAmounts.get(i)));
+    	
+    	
+	}
+
+	@Override
     public String toString() {
     	List<Component> components = _recipe.getComponents();
     	String s = super.toString()  + "|" + components.get(0);

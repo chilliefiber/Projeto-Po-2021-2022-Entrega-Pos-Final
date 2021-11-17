@@ -61,24 +61,30 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
           Integer i = recipeForm.integerField("numComp");
           double alpha = recipeForm.realField("alpha");
           
-          //List<String> componentKeys = new ArrayList<>();
-          //List<Integer> componentAmounts = new ArrayList<>();
+          List<String> componentKeys = new ArrayList<>();
+          List<Integer> componentAmounts = new ArrayList<>();
           while(i>0) {
             Form componentForm = new Form();
             componentForm.addStringField("product", Message.requestProductKey());
             componentForm.addIntegerField("amount", Message.requestAmount());
             componentForm.parse();
-            //componentKeys.add(componentForm.stringField("product"));
-            //componentAmounts.add(componentForm.integerField("amount"));
-            _receiver.addAggregateProduct(productId, alpha);
+            
             String componentProductId = componentForm.stringField("product");
             Integer amount = componentForm.integerField("amount");            
             try {
-            	_receiver.addComponentRecipe(productId,componentProductId,amount);
+            	_receiver.getProduct(componentProductId);
             } catch (UnknownProductException uce) {
             	throw new UnknownProductKeyException(componentProductId);
             }
+            componentKeys.add(componentProductId);
+            componentAmounts.add(amount);
+
             i--;
+          }
+          try {
+          _receiver.addAggregateProduct(productId, alpha, componentKeys, componentAmounts);
+          } catch (UnknownProductException upce) {
+        	  throw new RuntimeException(); //nunca deverá acontecer, foi tudo verificado em cima por motivos do output corresponder ao pedido. devia ter sido feita 1 interface em que recebiamos todos os componentes e so nos queixavamos se nao existia 1 componente no fim de termos recebido todos para facilitar
           }
 
         }

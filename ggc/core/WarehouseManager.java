@@ -114,9 +114,11 @@ public class WarehouseManager {
     return _warehouse.getPartnerSales(_warehouse.getPartner(partnerId));
   }
 
-  public void addAggregateProduct(String productId, double alpha) {
-    AggregateProduct newProduct = new AggregateProduct(productId);
-    newProduct.createRecipe(alpha);
+  public void addAggregateProduct(String productId, double alpha, List<String> componentKeys, List<Integer> componentAmounts) throws UnknownProductException{
+	  List<Product> components = new ArrayList<Product>();
+	  for (int i = 0; i < componentKeys.size(); i++)
+		  components.add(_warehouse.getProduct(componentKeys.get(i)));
+    AggregateProduct newProduct = new AggregateProduct(productId, alpha, components, componentAmounts);
     _warehouse.addProduct(newProduct);
   }
 
