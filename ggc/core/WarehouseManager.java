@@ -211,7 +211,7 @@ public class WarehouseManager {
   	// perguntar se esse é o melhor comportamento, se devemos lançar uma exceção do core e apanhar na app
   	// se a devemos criar etc...
   	// se devemos devolver 1 boolean e lançar a exceção nesse caso
-  	public void registerSaleByCredit(String partnerId, int deadline, String productId, int quantity) throws InsufficientUnitsException, InsufficientComponentUnitsException,
+  	public void registerSaleByCredit(String partnerId, int deadline, String productId, int quantity) throws InsufficientComponentUnitsException,
   	                                                                                                        UnknownProductException, UnknownPartnerException {
   		Product product = _warehouse.getProduct(productId);
   		Partner partner = _warehouse.getPartner(partnerId);

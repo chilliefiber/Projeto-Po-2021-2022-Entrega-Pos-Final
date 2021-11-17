@@ -39,8 +39,6 @@ public class DoRegisterSaleTransaction extends Command<WarehouseManager> {
     	throw new UnknownPartnerKeyException(partnerId);
     } catch (UnknownProductException upe){
     	throw new UnknownProductKeyException(productId);
-    } catch (InsufficientUnitsException iue) {
-    	throw new UnavailableProductException(productId, quantity, iue.getAvailableUnits());
     } catch (InsufficientComponentUnitsException icue) {
     	throw new UnavailableProductException(icue.getProductId(), icue.getNeededUnits(), icue.getAvailableUnits());
     }

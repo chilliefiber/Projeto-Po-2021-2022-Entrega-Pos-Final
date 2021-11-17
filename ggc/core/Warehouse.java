@@ -179,11 +179,21 @@ public class Warehouse implements Serializable {
     	return res;
     }
 
-    void registerSaleByCredit(Partner partner, int deadline, Product product, int quantity) throws InsufficientUnitsException, InsufficientComponentUnitsException {
+    void registerSaleByCredit(Partner partner, int deadline, Product product, int quantity) throws InsufficientComponentUnitsException {
     	// lança a exceção InsufficientUnitsException
-    	product.checkComponents(quantity); 
-  		if (!product.checkQuantity(quantity))
-  			throw new InsufficientUnitsException(product.getCurrentStock());
+    	
+    	// para produtos simples, product.checkQuantity vai lançar a exceção InsufficentComponentUnitsException
+    	// se não houver existências suficientes, ou então não faz nada
+    	// para agregados vai ver primeiro se há existências suficientes 
+    	// se houver, tudo ok. Se não houver, vai fazer checkQuantity
+    	// a todos os componentes
+    	
+    	/* if (!product.checkQuantity) {
+    		thr
+    		
+    		*
+    		*/
+    	product.checkQuantity(quantity);
     	Date deadlineDate = new Date(deadline);
     	SaleByCredit sale = new SaleByCredit(quantity, product, partner, _transactionId++, deadlineDate, _date);
     	_transactions.put(sale.getId(), sale);

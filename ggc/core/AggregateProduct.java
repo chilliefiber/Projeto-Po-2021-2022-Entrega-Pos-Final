@@ -61,37 +61,18 @@ class AggregateProduct extends Product{
 		}
 		return createdBatches;
 	}
-
-	@Override 
-	void checkComponents(int quantity) throws InsufficientComponentUnitsException {
-		// se ja temos unidades que chegue ja agregadas nao faz nada
-		if (super.checkQuantity(quantity))
-			return;
-		// caso contrário vamos ver qual é o primeiro produto da receita
-		// que está a faltar (se é que há algum)
-		int neededQuantity = quantity - this.getCurrentStock();
-		for (Component component : _recipe.getComponents()) {
-			// neste caso não há existências suficientes deste componente para fazer a agregação
-			if (component.getQuantity() * neededQuantity > component.getProduct().getCurrentStock())
-				throw new InsufficientComponentUnitsException(component.getProduct().getCurrentStock(), component.getQuantity() * neededQuantity, component.getProduct().getId());
-		}
-	}
 	
 	// aqui se não houver a quantidade suficiente vai tentar fazer a agregação
 	@Override
-	boolean checkQuantity(int quantity) {
-		// neste caso temos existências suficientes sem precisarmos de agregar
-		if (super.checkQuantity(quantity))
-			return true;
+	void checkQuantity(int quantity) throws InsufficientComponentUnitsException {
+		if (this.getCurrentStock() >= quantity)
+			return; // há existências suficientes sem precisar de agregar
+
 		// neededQuantity é a quantidade de produto agregado a criar
 		int neededQuantity = quantity - this.getCurrentStock();
 		
-		for (Component component : _recipe.getComponents()) {
-			// neste caso não há existências suficientes deste componente para fazer a agregação
-			if (component.getQuantity() * neededQuantity > component.getProduct().getCurrentStock())
-				return false;
-		}
-		return true;
+		for (Component component : _recipe.getComponents()) 
+			component.getProduct().checkQuantity(component.getQuantity() * neededQuantity);
 	}
 	
 	@Override 

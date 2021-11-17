@@ -63,8 +63,9 @@ abstract class Product implements Serializable {
         _maxPrice = firstPrice; 
     }
 
-    boolean checkQuantity(int quantity) {
-    	return this.getCurrentStock() >= quantity;
+    void checkQuantity(int quantity) throws InsufficientComponentUnitsException {
+    	if (this.getCurrentStock() < quantity)
+    		throw new InsufficientComponentUnitsException(this.getCurrentStock(), quantity, this.getId());
     }
     
     /**
@@ -205,8 +206,6 @@ abstract class Product implements Serializable {
     double getPriceOfBatchCreatedByBreakdown() {
     	return _batches.size() == 0 ? this.getMaxPrice() : _batches.peek().getPrice();
     }
-    
-    void checkComponents(int quantity) throws InsufficientComponentUnitsException {}
  
     void addComponentRecipe(Product product, int amount) {}
 }
